@@ -56,12 +56,12 @@ FOREIGN KEY (id_produto) REFERENCES produtos(id_produto)
 );
    
 CREATE TABLE IF NOT EXISTS pagamentos (
-id_pagamento SERIAL PRIMARY KEY,
-id_pedido INT,
-metodo ENUM NOT NULL,
-status ENUM DEFAULT,
-data_pagamento TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-FOREIGN KEY (id_pedido) REFERENCES pedidos(id_pedido)
+    id_pagamento SERIAL PRIMARY KEY,
+    id_pedido INT,
+    metodo VARCHAR(20) NOT NULL CHECK (metodo IN ('Cartão de Crédito', 'Cartão de Débito', 'PIX', 'Boleto', 'Dinheiro')),
+    status VARCHAR(20) DEFAULT 'Pendente' CHECK (status IN ('Pendente', 'Aprovado', 'Recusado', 'Cancelado', 'Estornado')),
+    data_pagamento TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_pedido) REFERENCES pedidos(id_pedido)
 );
    
 INSERT INTO usuarios (nome, email, senha, endereco, telefone)
